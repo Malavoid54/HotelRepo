@@ -86,9 +86,9 @@ int bar(){
 }
 
 int main(){
-   int temp = 0;
-
-   cout << "Enter the number of the room you wish to go to: Lobby - 1,  Your Room - 2, Bar - 3" << endl;
+   int temp = 1;
+   while (temp>0){
+   cout << "Enter the number of the room you wish to go to: Lobby - 1,  Your Room - 2, Bar - 3, 0 to quit" << endl;
    cout << temp<< endl;
    cin >> temp;
    cout << temp <<endl;
@@ -98,5 +98,6 @@ int main(){
       room();
    } else if (temp==3){
       bar();
+   }
    }
 }
