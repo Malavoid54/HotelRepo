@@ -30,7 +30,7 @@ int lobby(){
 }
 //generate window for the hotel room and display it
 int room(){
-   sf::RenderWindow window(sf::VideoMode(1000,600), "Hotel Room");
+   sf::RenderWindow window(sf::VideoMode(1000,600), "Hotel Room", sf::Style::Fullscreen);
 
    //hotelroom
    sf::Texture pTexture_one;
@@ -38,6 +38,7 @@ int room(){
    if(!pTexture_one.loadFromFile("room.jpeg"))
       std::cout<<"Couldnt load image"<<std::endl;
    hotelRoom.setTexture(pTexture_one);
+   //hotelRoom.setPosition(100,100);
    
    int temp=0;
       while (window.isOpen()){
@@ -117,10 +118,10 @@ int gym(){
 
    //hotelroom
    sf::Texture pTexture_one;
-   sf::Sprite hotelBar;
-   if(!pTexture_one.loadFromFile("hotelbgym.jpg"))
+   sf::Sprite hotelGym;
+   if(!pTexture_one.loadFromFile("hotelgym.jpg"))
       std::cout<<"Couldnt load image"<<std::endl;
-   hotelGYm.setTexture(pTexture_one);
+   hotelGym.setTexture(pTexture_one);
    
       while (window.isOpen()){
        sf::Event event;
