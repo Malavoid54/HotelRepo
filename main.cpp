@@ -30,7 +30,7 @@ int lobby(){
 }
 //generate window for the hotel room and display it
 int room(){
-   sf::RenderWindow window(sf::VideoMode(1000,600), "Hotel Room", sf::Style::Fullscreen);
+   sf::RenderWindow window(sf::VideoMode(1000,600), "Hotel Room");
 
    //hotelroom
    sf::Texture pTexture_one;
