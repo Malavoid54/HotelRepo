@@ -6,6 +6,7 @@
 #include <iostream>
 #include "game.h"
 #include "cursor.h"
+#include "button.h"
 
 using namespace sf;
 
@@ -13,26 +14,29 @@ class ClickTest: public Game {
     private:
         RenderWindow* win;
         Mouse_Cursor* cursor;
-        bool isFocused;
+        Button* button;
     public:
-        ClickTest(int size, std::string title) {
-            isFocused = true;
-            win = new RenderWindow(VideoMode(size,size),title);
+        ClickTest(int size1, int size2, std::string title) {
+            win = new RenderWindow(VideoMode(size1,size2),title);
             win->setMouseCursorVisible(false);
-            win->setMouseCursorGrabbed(isFocused);
+            win->setMouseCursorGrabbed(false);
             cursor = new Mouse_Cursor(10, win);
+            button = new Button(win);
         }
         void draw_frame () {
+            button->draw(win);
             cursor->draw(win);
+            
+            
+        }
+        void checkCollision() {
+            button->highlightSprite(cursor->getSprite());
         }
         void run () {
             while (win->isOpen()) {
                 Event e;
                 while (win->pollEvent(e)) {
                     cursor->move(win);
-                    if (e.type == Event::Closed) {
-                        win->close();
-                    } 
                     if (e.type == Event::KeyPressed) {
                         if (e.key.code == Keyboard::Escape) {
                             win->close();
@@ -40,11 +44,15 @@ class ClickTest: public Game {
                     }
                 }
                 win->clear();
+                checkCollision();
                 draw_frame();
                 win->display();
             }
         }
-        ~ClickTest() {}
+        ~ClickTest() {
+            delete cursor;
+            delete button;
+        }
 };
 
 

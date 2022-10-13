@@ -11,6 +11,7 @@ class Mouse_Cursor {
         Sprite* body;
         Vector2i position;
         Texture texture;
+        Sprite* collision;
     public:
         Mouse_Cursor(int r, RenderWindow* win) {
             position = Mouse::getPosition(*win);
@@ -18,10 +19,13 @@ class Mouse_Cursor {
                 std::cout <<"Image not Found\n";
                 exit(0);
             }
-            body = new Sprite();
-            body->setTexture(texture);
+            body = new Sprite(texture);
+            collision = new Sprite();
+            collision->setTextureRect(IntRect(0,0,1,1));
             body->setPosition(position.x,position.y);
-            body->setOrigin(7,7);
+            collision->setPosition(position.x,position.y);
+            body->setOrigin(0,0);
+            
         }
         void draw(RenderWindow* win) {
             win->draw(*body);
@@ -29,7 +33,12 @@ class Mouse_Cursor {
         void move(RenderWindow* win) {
             position = Mouse::getPosition(*win);
             body->setPosition(position.x,position.y);
+            collision->setPosition(position.x,position.y);
         }
+        Sprite* getSprite () {
+            return collision;
+        }
+        ~Mouse_Cursor() {delete this->body;}
 };
 
 #endif
