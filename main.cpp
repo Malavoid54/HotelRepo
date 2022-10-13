@@ -22,14 +22,13 @@ int lobby(){
            if (event.type == sf::Event::Closed)
                window.close();
        }
-      //if(temp=0){
        window.clear();
        window.draw(playerImage);
        window.display();
       }
    return 0;
 }
-
+//generate window for the hotel room and display it
 int room(){
    sf::RenderWindow window(sf::VideoMode(1000,600), "Hotel Room");
 
@@ -85,10 +84,65 @@ int bar(){
    return 0;
 }
 
+int toilets(){
+   sf::RenderWindow window(sf::VideoMode(1000,600), "Hotel Bathrooms");
+
+   //hotelroom
+   sf::Texture pTexture_one;
+   sf::Sprite hotelBathroom;
+   if(!pTexture_one.loadFromFile("hotelbathroom.jpeg"))
+      std::cout<<"Couldnt load image"<<std::endl;
+   hotelBathroom.setTexture(pTexture_one);
+   
+      while (window.isOpen()){
+       sf::Event event;
+       while (window.pollEvent(event))
+       {
+           if (event.type == sf::Event::Closed)
+               window.close();
+       }
+
+      
+       window.clear();
+       window.draw(hotelBathroom);
+       window.display();
+      
+      }
+   return 0;
+}
+
+
+int gym(){
+   sf::RenderWindow window(sf::VideoMode(1000,600), "Gym");
+
+   //hotelroom
+   sf::Texture pTexture_one;
+   sf::Sprite hotelBar;
+   if(!pTexture_one.loadFromFile("hotelbgym.jpg"))
+      std::cout<<"Couldnt load image"<<std::endl;
+   hotelGYm.setTexture(pTexture_one);
+   
+      while (window.isOpen()){
+       sf::Event event;
+       while (window.pollEvent(event))
+       {
+           if (event.type == sf::Event::Closed)
+               window.close();
+       }
+
+      
+       window.clear();
+       window.draw(hotelGym);
+       window.display();
+      
+      }
+   return 0;
+}
+
 int main(){
    int temp = 1;
    while (temp>0){
-   cout << "Enter the number of the room you wish to go to: Lobby - 1,  Your Room - 2, Bar - 3, 0 to quit" << endl;
+   cout << "Enter the number of the room you wish to go to: Lobby - 1,  Your Room - 2, Bar - 3, Bathroom - 4, Gym - 5,  0 to quit" << endl;
    cout << temp<< endl;
    cin >> temp;
    cout << temp <<endl;
@@ -98,6 +152,10 @@ int main(){
       room();
    } else if (temp==3){
       bar();
+   } else if (temp==4){
+      toilets();
+   }else if (temp==5){
+      gym();
    }
    }
 }
