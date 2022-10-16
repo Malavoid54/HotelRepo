@@ -19,18 +19,28 @@ class ClickTest: public Game {
         ClickTest(int size1, int size2, std::string title) {
             win = new RenderWindow(VideoMode(size1,size2),title);
             win->setMouseCursorVisible(false);
-            win->setMouseCursorGrabbed(false);
+            win->setMouseCursorGrabbed(true);
             cursor = new Mouse_Cursor(10, win);
-            button = new Button(win);
+            button = new Button[3];
+            for (int i = 0; i < 3; i++) {
+                button[i].setPosition(win,(3-i));
+            }
+            button[2].setText("Start Game");
+            button[1].setText("Load Game");
+            button[0].setText("Quit Game");
         }
         void draw_frame () {
-            button->draw(win);
+            for (int i = 0; i < 3; i++){
+                button[i].draw(win);
+            }
             cursor->draw(win);
             
             
         }
         void checkCollision() {
-            button->highlightSprite(cursor->getSprite());
+            for (int i = 0; i < 3; i++){
+                button[i].highlightSprite(cursor->getSprite());
+            }
         }
         void run () {
             while (win->isOpen()) {
@@ -42,6 +52,13 @@ class ClickTest: public Game {
                             win->close();
                         }
                     }
+                    if (e.type == Event::MouseButtonPressed) {
+                        if (e.mouseButton.button == Mouse::Left) {
+                            if (button[0].highlightSprite(cursor->getSprite())) {
+                                win->close();
+                            }
+                        }
+                    }
                 }
                 win->clear();
                 checkCollision();
@@ -51,7 +68,7 @@ class ClickTest: public Game {
         }
         ~ClickTest() {
             delete cursor;
-            delete button;
+            delete [] button;
         }
 };
 

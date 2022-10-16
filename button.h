@@ -5,6 +5,7 @@
 #include <string>
 #include <iostream>
 #include <cmath>
+#include <string>
 
 using namespace sf;
 
@@ -13,8 +14,10 @@ class Button {
         Sprite* body;
         Texture texture;
         IntRect* source;
+        Text title;
+        Font font;
     public:
-        Button(RenderWindow* win) {
+        Button() {
             source = new IntRect(0,0,200,20);
             if (!texture.loadFromFile("./buttons.png")) {
                 std::cout <<"Image not Found\n";
@@ -25,19 +28,37 @@ class Button {
             body->setTextureRect(*source);
             body->setOrigin(100,10);
             body->setScale(3,3);
-            body->setPosition((win->getSize().x)/2,(win->getSize().y)-400);
+            if (!font.loadFromFile("./buttonFont.ttf")) {
+                std::cout <<"Font not Found\n";
+                exit(0);
+            }
+            title.setFont(font);
+            title.setFillColor(sf::Color::White);
+            title.setCharacterSize(30);
             
         }
         void draw(RenderWindow* win) {
             win->draw(*body);
+            win->draw(title);
         }
-        void highlightSprite(Sprite* sprite) {
+        void setText (std::string text) {
+            title.setString(text);
+            FloatRect textSize = title.getLocalBounds();
+            title.setOrigin(textSize.width/2,textSize.height/2);
+        }
+        void setPosition(RenderWindow* win, int yPos) {
+            body->setPosition((win->getSize().x)/2,(yPos+2)*100);
+            title.setPosition((win->getSize().x)/2,((yPos+2)*100)-10);
+        }
+        bool highlightSprite(Sprite* sprite) {
             if (sprite->getGlobalBounds().intersects(body->getGlobalBounds())) {
                 source->top = 20;
                 body->setTextureRect(*source);
+                return true;
             } else {
                 source->top = 0;
                 body->setTextureRect(*source);
+                return false;
             }           
         }
 
