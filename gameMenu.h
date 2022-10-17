@@ -1,21 +1,16 @@
 #ifndef GAMEMENU_H
 #define GAMEMENU_H
 
-#include <SFML/Graphics.hpp>
-#include <string>
-#include <iostream>
-#include <cmath>
-#include <string>
 #include "room.h"
 #include "button.h"
 #include "cursor.h"
-
-using namespace sf;
 
 class GameMenu: public Room{
     private:
         Button* button;
         RenderWindow* store;
+        Clock clock;
+        Time time;
     public:
         GameMenu(RenderWindow* win) {
             button = new Button[3];
@@ -29,10 +24,27 @@ class GameMenu: public Room{
             active = true;
         }
         void draw(RenderWindow* win) {
-            win->draw(*background);
-            for (int i = 0; i < 3; i++){
-                button[i].draw(win);
+            if (active) {
+                win->draw(*background);
+                for (int i = 0; i < 3; i++){
+                    button[i].draw(win);
+                }
+                time = clock.restart();
+            } else if (!active) {
+                time = clock.getElapsedTime();
+                if (time.asSeconds() > 2 && time.asSeconds() < 5) {
+                    setRoom(0,90);
+                    win->draw(*background);
+                } else if (time.asSeconds() > 2 && time.asSeconds() < 10) {
+                    setRoom(0,180);
+                    win->draw(*background);
+                } else if (time.asSeconds() > 2 && time.asSeconds() < 15) {
+                    setRoom(0,270);
+                    win->draw(*background);
+                }
+            
             }
+            
         }
 
         void buttonPress(Mouse_Cursor* cursor, Event e) {
@@ -52,7 +64,7 @@ class GameMenu: public Room{
                 if (e.type == Event::MouseButtonPressed) {
                     if (e.mouseButton.button == Mouse::Left) {
                         active = false;
-                    }   
+                    }
                 }
             }
         }

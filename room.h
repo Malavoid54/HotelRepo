@@ -27,6 +27,7 @@ class Room{
             background->setTexture(backTexture);
             background->setTextureRect(source);
             background->setScale(10,10);
+            active = false;
             
         }
         void setRoom (int x, int y) {

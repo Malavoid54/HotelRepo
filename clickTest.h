@@ -21,14 +21,12 @@ class ClickTest: public Game {
             win = new RenderWindow(VideoMode(size1,size2),title);
             win->setMouseCursorVisible(false);
             win->setMouseCursorGrabbed(true);
-            win->setFramerateLimit(144);
+            win->setFramerateLimit(60);
             cursor = new Mouse_Cursor(10, win);
             menu = new GameMenu(win);
         }
         void draw_frame () {
-            if (menu->getStatus()) {
-                menu->draw(win);
-            }
+            menu->draw(win);
             cursor->draw(win);
             
         }
