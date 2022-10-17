@@ -1,10 +1,25 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 #include <iostream>
+#include "room.h"
 using namespace std;
 
+int ticker = 0;
 
-int lobby(){
+int main(){
+   int money = 0;
+   for (int i=0;i<100;i++){
+      if (ticker==0){
+      Room bathroom(1500,900,"Test","hotelbathroom.jpeg");
+      cin>>money;
+      } else if (ticker==1){
+      Room lobby(1500,900, "Lobby", "lobby.png" );
+      } else if (ticker==2){
+      Room room(1500,900, "Room", "room.jpeg");
+      }
+}
+}
+/*int lobby(){
     sf::RenderWindow window(sf::VideoMode(1000,600), "Hotel Lobby");
    //hotellobby
    sf::Texture pTexture;
@@ -160,3 +175,5 @@ int main(){
    }
    }
 }
+*/
+
