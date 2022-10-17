@@ -51,7 +51,7 @@ class GameMenu: public Room{
             } else if (button[2].highlightSprite(cursor->getSprite()) && active) {
                 if (e.type == Event::MouseButtonPressed) {
                     if (e.mouseButton.button == Mouse::Left) {
-                        active = false;
+                        active = false; 
                     }   
                 }
             }
