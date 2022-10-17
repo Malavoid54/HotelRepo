@@ -1,29 +1,46 @@
 #ifndef ROOM_H
 #define ROOM_H
+
 #include <SFML/Graphics.hpp>
 #include <string>
 #include <iostream>
+#include <cmath>
+#include <string>
+
 using namespace sf;
 
 class Room{
-    private:
-        int size_w;
-        int size_h;
+    protected:
+        Texture backTexture;
+        Sprite* background;
+        IntRect source;
+        bool active;
     public:
-        Room(int size_w,int size_h, std::string title, std::string filename) {
-            RenderWindow window(VideoMode(size_w,size_h), title);
-            Texture pTexture;
-            Sprite playerImage;
-            if(!pTexture.loadFromFile(filename))
+        Room() {
+            source.width = 160;
+            source.height = 90;
+            if(!backTexture.loadFromFile("./rooms.png")) {
                 std::cout<<"Couldnt load image"<<std::endl;
-            playerImage.setTexture(pTexture);
-        }
-        void displayroom(){
-
+                exit(0);
+            }
+            background = new Sprite();
+            background->setTexture(backTexture);
+            background->setTextureRect(source);
+            background->setScale(10,10);
             
         }
+        void setRoom (int x, int y) {
+            source.top = y;
+            source.left = x;
+            background->setTextureRect(source);
+        }
 
+        bool getStatus () {
+            return active;
+        }
 
-
+        virtual void draw(RenderWindow* win) {
+            win->draw(*background);
+        }
 };
 #endif

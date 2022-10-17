@@ -7,6 +7,7 @@
 #include "game.h"
 #include "cursor.h"
 #include "button.h"
+#include "gameMenu.h"
 
 using namespace sf;
 
@@ -14,61 +15,47 @@ class ClickTest: public Game {
     private:
         RenderWindow* win;
         Mouse_Cursor* cursor;
-        Button* button;
+        GameMenu* menu;
     public:
         ClickTest(int size1, int size2, std::string title) {
             win = new RenderWindow(VideoMode(size1,size2),title);
             win->setMouseCursorVisible(false);
             win->setMouseCursorGrabbed(true);
+            win->setFramerateLimit(144);
             cursor = new Mouse_Cursor(10, win);
-            button = new Button[3];
-            for (int i = 0; i < 3; i++) {
-                button[i].setPosition(win,(3-i));
-            }
-            button[2].setText("Start Game");
-            button[1].setText("Load Game");
-            button[0].setText("Quit Game");
+            menu = new GameMenu(win);
         }
         void draw_frame () {
-            for (int i = 0; i < 3; i++){
-                button[i].draw(win);
+            if (menu->getStatus()) {
+                menu->draw(win);
             }
             cursor->draw(win);
             
-            
         }
-        void checkCollision() {
-            for (int i = 0; i < 3; i++){
-                button[i].highlightSprite(cursor->getSprite());
-            }
+        void checkCollision () {
+            
         }
         void run () {
             while (win->isOpen()) {
                 Event e;
                 while (win->pollEvent(e)) {
-                    cursor->move(win);
                     if (e.type == Event::KeyPressed) {
                         if (e.key.code == Keyboard::Escape) {
                             win->close();
                         }
                     }
-                    if (e.type == Event::MouseButtonPressed) {
-                        if (e.mouseButton.button == Mouse::Left) {
-                            if (button[0].highlightSprite(cursor->getSprite())) {
-                                win->close();
-                            }
-                        }
-                    }
+                    menu->buttonPress(cursor, e);
                 }
                 win->clear();
-                checkCollision();
+                cursor->move(win);
                 draw_frame();
                 win->display();
             }
         }
+       
         ~ClickTest() {
             delete cursor;
-            delete [] button;
+            delete menu;
         }
 };
 
