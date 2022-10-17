@@ -19,6 +19,7 @@ class ClickTest: public Game {
     public:
         ClickTest(int size1, int size2, std::string title) {
             win = new RenderWindow(VideoMode(size1,size2),title);
+            win->setVerticalSyncEnabled(true);
             win->setMouseCursorVisible(false);
             win->setMouseCursorGrabbed(true);
             win->setFramerateLimit(144);

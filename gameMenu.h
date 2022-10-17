@@ -9,6 +9,7 @@
 #include "room.h"
 #include "button.h"
 #include "cursor.h"
+#include "clickTest.h"
 
 using namespace sf;
 
@@ -51,7 +52,7 @@ class GameMenu: public Room{
             } else if (button[2].highlightSprite(cursor->getSprite()) && active) {
                 if (e.type == Event::MouseButtonPressed) {
                     if (e.mouseButton.button == Mouse::Left) {
-                        active = false; 
+                        //store->close();
                     }   
                 }
             }
