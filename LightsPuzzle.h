@@ -10,6 +10,7 @@
 // first room puzzle
 class LightsPuzzle: public Room {
     private:
+        RenderWindow* store;
         RoomArrow* buttons;
         GameItem* options;
         bool mainWall;
@@ -21,11 +22,12 @@ class LightsPuzzle: public Room {
             setRoom(320,0);
             active = false;
             mainWall = true;
+            store = win;
 
             // defines the number of arrows and defines each one
             buttons = new RoomArrow[2];
-            buttons[0].setPosition(win,1500,0);
-            buttons[1].setPosition(win,100,0);
+            buttons[0].setPosition(win,1500,300);
+            buttons[1].setPosition(win,100,(win->getSize().y)/2);
             buttons[1].flipButton();
         
             // creates the clickable buttons
@@ -62,7 +64,7 @@ class LightsPuzzle: public Room {
         
         // handles button presses
         void buttonPress(Mouse_Cursor* cursor, Event e) {
-            if (buttons[0].highlightSprite(cursor->getSprite(),200,0) && active && mainWall) {
+            if (buttons[0].highlightSprite(cursor->getSprite(),211,0) && active && mainWall) {
                 if (e.type == Event::MouseButtonPressed) {
                     // moves to new screen
                     if (e.mouseButton.button == Mouse::Left) {
@@ -70,7 +72,7 @@ class LightsPuzzle: public Room {
                         mainWall = false;
                     }   
                 }
-            } else if (buttons[1].highlightSprite(cursor->getSprite(),200,0) && active && !mainWall) {
+            } else if (buttons[1].highlightSprite(cursor->getSprite(),211,0) && active && !mainWall) {
                 if (e.type == Event::MouseButtonPressed) {
                     // moves back to original
                     if (e.mouseButton.button == Mouse::Left) {
@@ -80,10 +82,18 @@ class LightsPuzzle: public Room {
                 } 
             } else if (options[0].highlightSprite(cursor->getSprite(),0,73) && active && !mainWall) {
                 if (e.type == Event::MouseButtonPressed) {
-                    // does nothing;
+                    // close game if wrong
+                    if (e.mouseButton.button == Mouse::Left) {
+                        store->close();
+                    }
                 }
             } else if (options[1].highlightSprite(cursor->getSprite(),12,73) && active && !mainWall) {
-                // does nothing;
+                if (e.type == Event::MouseButtonPressed) {
+                    // close game if wrong
+                    if (e.mouseButton.button == Mouse::Left) {
+                        store->close();
+                    }
+                }
             } else if (options[2].highlightSprite(cursor->getSprite(),24,73) && active && !mainWall) {
                 // correct answer
                     if (e.mouseButton.button == Mouse::Left) {

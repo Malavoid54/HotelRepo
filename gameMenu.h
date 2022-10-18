@@ -1,6 +1,8 @@
 #ifndef GAMEMENU_H
 #define GAMEMENU_H
 
+#include <fstream>
+
 #include "room.h"
 #include "button.h"
 #include "cursor.h"
@@ -16,6 +18,9 @@ class GameMenu: public Room{
         Clock clock;
         Time time;
         bool loop;
+
+        // int for saves
+        int* save;
     public:
         // constructor for the menu
         GameMenu(RenderWindow* win) {
@@ -30,6 +35,8 @@ class GameMenu: public Room{
             store = win; // stores a local copy of the window pointer
             active = true; // sets the room to be true
             loop = false;
+            save = new int; // integer for save function
+            *save = 0;
         }
 
         // draws the background and the buttons
@@ -75,7 +82,12 @@ class GameMenu: public Room{
                 if (e.type == Event::MouseButtonPressed) {
                     // loads a save
                     if (e.mouseButton.button == Mouse::Left) {
-                        
+                        std::ifstream saveFile ("save.txt");
+                        std::string tempString;
+                        if (saveFile.is_open()) {
+                            saveFile >> tempString;
+                            *save = stoi(tempString);
+                        }
                     }   
                 }
             } else if (button[2].highlightSprite(cursor->getSprite(), 0, 0) && active) {
@@ -90,6 +102,11 @@ class GameMenu: public Room{
 
         bool getStatus () {
             return loop;
+        }
+
+        // return save file
+        int getSave () {
+            return *save;
         }
 
         ~GameMenu() {

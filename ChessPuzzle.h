@@ -10,6 +10,7 @@
 // first room puzzle
 class ChessPuzzle: public Room {
     private:
+        RenderWindow* store;
         RoomArrow* buttons;
         GameItem* options;
         bool mainWall;
@@ -21,11 +22,12 @@ class ChessPuzzle: public Room {
             setRoom(160,0);
             active = false;
             mainWall = true;
+            store = win;
 
             // defines the number of arrows and defines each one
             buttons = new RoomArrow[2];
-            buttons[0].setPosition(win,1500,0);
-            buttons[1].setPosition(win,100,0);
+            buttons[0].setPosition(win,1500,(win->getSize().y)/2);
+            buttons[1].setPosition(win,100,(win->getSize().y)/2);
             buttons[1].flipButton();
         
             // creates the clickable buttons
@@ -86,9 +88,19 @@ class ChessPuzzle: public Room {
                     }
                 }
             } else if (options[1].highlightSprite(cursor->getSprite(),13,40) && active && mainWall) {
-                // does nothing;
+                if (e.type == Event::MouseButtonPressed) {
+                    // close game if wrong
+                    if (e.mouseButton.button == Mouse::Left) {
+                        store->close();
+                    }
+                }
             } else if (options[2].highlightSprite(cursor->getSprite(),26,40) && active && mainWall) {
-                // does nothing;
+                if (e.type == Event::MouseButtonPressed) {
+                    // close game if wrong
+                    if (e.mouseButton.button == Mouse::Left) {
+                        store->close();
+                    }
+                }
             }
         }
         

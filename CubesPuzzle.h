@@ -10,6 +10,7 @@
 // Cubes puzzle
 class CubesPuzzle: public Room {
     private:
+        RenderWindow* store;
         RoomArrow* buttons;
         GameItem* options;
         bool mainWall;
@@ -25,11 +26,12 @@ class CubesPuzzle: public Room {
             mainWall = true;
             answerOne = false;
             answerTwo = false;
+            store = win;
 
             // defines the number of arrows and defines each one
             buttons = new RoomArrow[2];
-            buttons[0].setPosition(win,1500,0);
-            buttons[1].setPosition(win,100,0);
+            buttons[0].setPosition(win,1500,270);
+            buttons[1].setPosition(win,100,(win->getSize().y)/2);
             buttons[1].flipButton();
         
             // creates the clickable buttons
@@ -40,12 +42,12 @@ class CubesPuzzle: public Room {
             }
 
             // positions the 3 options
-            options[0].setPosition(win,200,280);
-            options[1].setPosition(win,200,310);
-            options[2].setPosition(win,200,340);
-            options[3].setPosition(win,260,280);
-            options[4].setPosition(win,260,310);
-            options[5].setPosition(win,260,340);
+            options[0].setPosition(win,600,280);
+            options[1].setPosition(win,600,380);
+            options[2].setPosition(win,600,480);
+            options[3].setPosition(win,800,280);
+            options[4].setPosition(win,800,380);
+            options[5].setPosition(win,800,480);
         }
 
         // draws the room and items
@@ -64,6 +66,13 @@ class CubesPuzzle: public Room {
                         options[i].draw(win);
                     }
                 }
+                checkCorrect();
+            }
+        }
+
+        void checkCorrect () {
+            if (answerOne && answerTwo) {
+                active = false;
             }
         }
         
@@ -86,31 +95,48 @@ class CubesPuzzle: public Room {
                     }
                 } 
             } else if (options[0].highlightSprite(cursor->getSprite(),39,40) && active && !mainWall) {
-                // does nothing;
-            } else if (options[1].highlightSprite(cursor->getSprite(),39,51) && active && !mainWall) {
+                if (e.type == Event::MouseButtonPressed) {
+                    // close game if wrong
+                    if (e.mouseButton.button == Mouse::Left) {
+                        store->close();
+                    }
+                }
+            } else if (options[1].highlightSprite(cursor->getSprite(),52,40) && active && !mainWall) {
                 if (e.type == Event::MouseButtonPressed) {
                     // correct answer
                     if (e.mouseButton.button == Mouse::Left) {
                         answerOne = true;
                     }
                 }
-            } else if (options[2].highlightSprite(cursor->getSprite(),39,62) && active && !mainWall) {
-                // does nothing;
-            } else if (options[3].highlightSprite(cursor->getSprite(),65,40) && active && !mainWall) {
-                // does nothing;
-            } else if (options[4].highlightSprite(cursor->getSprite(),65,51) && active && !mainWall) {
-                // does nothing;
-            } else if (options[5].highlightSprite(cursor->getSprite(),65,62) && active && !mainWall) {
+            } else if (options[2].highlightSprite(cursor->getSprite(),65,40) && active && !mainWall) {
+                if (e.type == Event::MouseButtonPressed) {
+                    // close game if wrong
+                    if (e.mouseButton.button == Mouse::Left) {
+                        store->close();
+                    }
+                }
+            } else if (options[3].highlightSprite(cursor->getSprite(),78,40) && active && !mainWall) {
                 if (e.type == Event::MouseButtonPressed) {
                     // correct answer
-                    /*if (e.mouseButton.button == Mouse::Left) {
+                    if (e.mouseButton.button == Mouse::Left) {
                         answerTwo = true;
-                        if (answerOne && answerTwo){
-                            active = false;
-                        }
-                    }*/
+                    }
                 }
-            }
+            } else if (options[4].highlightSprite(cursor->getSprite(),91,40) && active && !mainWall) {
+                if (e.type == Event::MouseButtonPressed) {
+                    // close game if wrong
+                    if (e.mouseButton.button == Mouse::Left) {
+                        store->close();
+                    }
+                }
+            } else if (options[5].highlightSprite(cursor->getSprite(),104,40) && active && !mainWall) {
+                if (e.type == Event::MouseButtonPressed) {
+                    // close game if wrong
+                    if (e.mouseButton.button == Mouse::Left) {
+                        store->close();
+                    }
+                }
+            } 
         }
         
         // returns the state of the room
