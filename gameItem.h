@@ -9,6 +9,7 @@
 
 using namespace sf;
 
+// base class for game entities
 class GameEntity {
     protected:
         Sprite* body;
@@ -19,6 +20,9 @@ class GameEntity {
             win->draw(*body);
         }
         virtual bool highlightSprite(Sprite* sprite) = 0;
+        ~GameEntity() {
+            delete body;
+        }
 };
 
 
