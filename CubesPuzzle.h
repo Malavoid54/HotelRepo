@@ -1,5 +1,5 @@
-#ifndef LIGHTSPUZZLE_H
-#define LIGHTSPUZZLE_H
+#ifndef CUBESPUZZLE_H
+#define CUBESPUZZLE_H
 
 #include "room.h"
 #include "roomArrow.h"
@@ -7,20 +7,24 @@
 #include "gameMenu.h"
 #include "gameItem.h"
 
-// first room puzzle
-class LightsPuzzle: public Room {
+// Cubes puzzle
+class CubesPuzzle: public Room {
     private:
         RoomArrow* buttons;
         GameItem* options;
         bool mainWall;
         int nOptions;
+        bool answerOne;
+        bool answerTwo;
     public:
         // constructor
-        LightsPuzzle(RenderWindow* win) {
+        CubesPuzzle(RenderWindow* win) {
             // initialises room settings
-            setRoom(320,0);
+            setRoom(160,180);
             active = false;
             mainWall = true;
+            answerOne = false;
+            answerTwo = false;
 
             // defines the number of arrows and defines each one
             buttons = new RoomArrow[2];
@@ -29,16 +33,19 @@ class LightsPuzzle: public Room {
             buttons[1].flipButton();
         
             // creates the clickable buttons
-            nOptions = 3;
+            nOptions = 6;
             options = new GameItem[nOptions];
             for (int i = 0; i < nOptions; i++) {
-                options[i].createSprite(12,21,6);
+                options[i].createSprite(13,11,6);
             }
 
             // positions the 3 options
-            options[0].setPosition(win,555,305);
-            options[1].setPosition(win,825,305);
-            options[2].setPosition(win,1150,305);
+            options[0].setPosition(win,200,280);
+            options[1].setPosition(win,200,310);
+            options[2].setPosition(win,200,340);
+            options[3].setPosition(win,260,280);
+            options[4].setPosition(win,260,310);
+            options[5].setPosition(win,260,340);
         }
 
         // draws the room and items
@@ -66,7 +73,7 @@ class LightsPuzzle: public Room {
                 if (e.type == Event::MouseButtonPressed) {
                     // moves to new screen
                     if (e.mouseButton.button == Mouse::Left) {
-                        setRoom(320,90);
+                        setRoom(160,270);
                         mainWall = false;
                     }   
                 }
@@ -74,21 +81,35 @@ class LightsPuzzle: public Room {
                 if (e.type == Event::MouseButtonPressed) {
                     // moves back to original
                     if (e.mouseButton.button == Mouse::Left) {
-                        setRoom(320,0);
+                        setRoom(160,180);
                         mainWall = true;
                     }
                 } 
-            } else if (options[0].highlightSprite(cursor->getSprite(),0,73) && active && !mainWall) {
-                if (e.type == Event::MouseButtonPressed) {
-                    // does nothing;
-                }
-            } else if (options[1].highlightSprite(cursor->getSprite(),12,73) && active && !mainWall) {
+            } else if (options[0].highlightSprite(cursor->getSprite(),39,40) && active && !mainWall) {
                 // does nothing;
-            } else if (options[2].highlightSprite(cursor->getSprite(),24,73) && active && !mainWall) {
-                // correct answer
+            } else if (options[1].highlightSprite(cursor->getSprite(),39,51) && active && !mainWall) {
+                if (e.type == Event::MouseButtonPressed) {
+                    // correct answer
                     if (e.mouseButton.button == Mouse::Left) {
-                        active = false;
+                        answerOne = true;
                     }
+                }
+            } else if (options[2].highlightSprite(cursor->getSprite(),39,62) && active && !mainWall) {
+                // does nothing;
+            } else if (options[3].highlightSprite(cursor->getSprite(),65,40) && active && !mainWall) {
+                // does nothing;
+            } else if (options[4].highlightSprite(cursor->getSprite(),65,51) && active && !mainWall) {
+                // does nothing;
+            } else if (options[5].highlightSprite(cursor->getSprite(),65,62) && active && !mainWall) {
+                if (e.type == Event::MouseButtonPressed) {
+                    // correct answer
+                    /*if (e.mouseButton.button == Mouse::Left) {
+                        answerTwo = true;
+                        if (answerOne && answerTwo){
+                            active = false;
+                        }
+                    }*/
+                }
             }
         }
         
@@ -97,7 +118,7 @@ class LightsPuzzle: public Room {
             return active;
         }
 
-        ~LightsPuzzle() {
+        ~CubesPuzzle() {
             delete [] buttons;
             delete [] options;
         }

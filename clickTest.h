@@ -9,6 +9,8 @@
 #include "button.h"
 #include "gameMenu.h"
 #include "ChessPuzzle.h"
+#include "LightsPuzzle.h"
+#include "Cubespuzzle.h"
 
 using namespace sf;
 
@@ -35,10 +37,12 @@ class ClickTest: public Game {
             *currentRoom = 0;
 
             // initialises the rooms and cursor
-            roomCount = 2;
+            roomCount = 4;
             rooms = new Room*[roomCount];
             rooms[0] = new GameMenu(win);
             rooms[1] = new ChessPuzzle(win);
+            rooms[2] = new LightsPuzzle(win);
+            rooms[3] = new CubesPuzzle(win);
             cursor = new Mouse_Cursor(win);
         }
 
@@ -60,11 +64,17 @@ class ClickTest: public Game {
                 std::cout << *currentRoom << std::endl;
 
             // checks if the first room is inactive and the current room is the first, then sets the next active
-            } /*else if (*currentRoom == 1 && !rooms[1]->getStatus()) {
+            } else if (*currentRoom == 1 && !rooms[1]->getStatus()) {
                 rooms[2]->setActive();
                 *currentRoom = 2;
                 std::cout << *currentRoom << std::endl;
-            }*/
+
+            
+            } else if (*currentRoom == 2 && !rooms[2]->getStatus()) {
+                rooms[3]->setActive();
+                *currentRoom = 3;
+                std::cout << *currentRoom << std::endl;
+            }
             
         }
 

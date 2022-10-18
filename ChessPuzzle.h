@@ -37,7 +37,7 @@ class ChessPuzzle: public Room {
 
             // positions the 3 options
             options[0].setPosition(win,555,235);
-            options[1].setPosition(win,835,505);
+            options[1].setPosition(win,825,505);
             options[2].setPosition(win,290,510);
         }
 
