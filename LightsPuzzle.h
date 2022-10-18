@@ -1,5 +1,5 @@
-#ifndef CHESSPUZZLE_H
-#define CHESSPUZZLE_H
+#ifndef LIGHTSPUZZLE_H
+#define LIGHTSPUZZLE_H
 
 #include "room.h"
 #include "roomArrow.h"
@@ -8,7 +8,7 @@
 #include "gameItem.h"
 
 // first room puzzle
-class ChessPuzzle: public Room {
+class LightsPuzzle: public Room {
     private:
         RoomArrow* buttons;
         GameItem* options;
@@ -16,9 +16,9 @@ class ChessPuzzle: public Room {
         int nOptions;
     public:
         // constructor
-        ChessPuzzle(RenderWindow* win) {
+        LightsPuzzle(RenderWindow* win) {
             // initialises room settings
-            setRoom(160,0);
+            setRoom(320,0);
             active = false;
             mainWall = true;
 
@@ -37,8 +37,8 @@ class ChessPuzzle: public Room {
 
             // positions the 3 options
             options[0].setPosition(win,555,235);
-            options[1].setPosition(win,835,505);
-            options[2].setPosition(win,290,510);
+            options[1].setPosition(win,375,505);
+            options[2].setPosition(win,290,690);
         }
 
         // draws the room and items
@@ -97,7 +97,7 @@ class ChessPuzzle: public Room {
             return active;
         }
 
-        ~ChessPuzzle() {
+        ~LightsPuzzle() {
             delete [] buttons;
             delete [] options;
         }
