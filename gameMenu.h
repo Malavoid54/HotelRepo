@@ -51,10 +51,17 @@ class GameMenu: public Room{
             } else if (button[2].highlightSprite(cursor->getSprite()) && active) {
                 if (e.type == Event::MouseButtonPressed) {
                     if (e.mouseButton.button == Mouse::Left) {
-                        active = false;
+                        for (int i=0;i<5;i++){
+                            active = false;
+                        }
                     }   
                 }
             }
+        }
+        void nextRoom(string filename){
+            active = false;
+            Room newRoom(filename);
+
         }
 
         ~GameMenu() {

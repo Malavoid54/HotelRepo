@@ -16,10 +16,10 @@ class Room{
         IntRect source;
         bool active;
     public:
-        Room() {
+        Room(char filename) {
             source.width = 160;
             source.height = 90;
-            if(!backTexture.loadFromFile("./rooms.png")) {
+            if(!backTexture.loadFromFile(filename)) {
                 std::cout<<"Couldnt load image"<<std::endl;
                 exit(0);
             }
