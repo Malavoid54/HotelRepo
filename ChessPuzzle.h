@@ -52,7 +52,7 @@ class ChessPuzzle: public Room {
                     if (e.mouseButton.button == Mouse::Left) {
                         setRoom(160,0);
                         mainWall = true;
-                    }   
+                    }
                 }
             } 
         }
