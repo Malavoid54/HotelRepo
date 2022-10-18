@@ -4,19 +4,17 @@
 #include "button.h"
 
 class RoomArrow: public Button {
-    private:
-
     public:
         RoomArrow() {
             // determines the size of each button
             source.height = 20;
-            source.width = 12;
+            source.width = 11;
             
             // creates the sprite and sets the scale
             body = new Sprite();
             body->setTexture(texture);
             body->setTextureRect(source);
-            setTexture(200,0);
+            setSprite(200,0);
             body->setOrigin(6,10);
             body->setScale(9,9);
         }
@@ -34,17 +32,6 @@ class RoomArrow: public Button {
         // flips the button
         void flipButton() {
             body->setScale(-9,9);
-        }
-
-        // checks if the mouse is currently hovering over the button
-        bool highlightSprite(Sprite* sprite) {
-            if (sprite->getGlobalBounds().intersects(body->getGlobalBounds())) {
-                setTexture(200,20);
-                return true;
-            } else {
-                setTexture(200,0);
-                return false;
-            }           
         }
 };
 

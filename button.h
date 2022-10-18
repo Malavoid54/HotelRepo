@@ -6,7 +6,7 @@
 #include <iostream>
 #include <cmath>
 #include <string>
-#include "gameItem.h"
+#include "gameEntity.h"
 
 using namespace sf;
 
@@ -22,12 +22,6 @@ class Button: public GameEntity {
             // determines the size of each button
             source.height = 20;
             source.width = 200;
-            
-            // loads the button texture
-            if (!texture.loadFromFile("./buttons.png")) {
-                std::cout <<"Image not Found\n";
-                exit(0);
-            }
 
             // creates the sprite and sets the scale
             body = new Sprite();
@@ -69,17 +63,6 @@ class Button: public GameEntity {
             x = (win->getSize().x)/2;
             body->setPosition(x,(y+3)*100);
             title.setPosition(x,((y+3)*100)-10);
-        }
-
-        // renders different textures based on if the cursor is hovering over the sprite
-        bool highlightSprite(Sprite* sprite) {
-            if (sprite->getGlobalBounds().intersects(body->getGlobalBounds())) {
-                setTexture(0,20);
-                return true;
-            } else {
-                setTexture(0,0);
-                return false;
-            }           
         }
         ~Button() {}
 };

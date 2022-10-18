@@ -20,6 +20,7 @@ class ClickTest: public Game {
         Mouse_Cursor* cursor;
         Room** rooms;
         int roomCount;
+        int *currentRoom;
     public:
         // constructor for the game
         ClickTest(int size1, int size2, std::string title) {
@@ -28,6 +29,10 @@ class ClickTest: public Game {
             win->setMouseCursorVisible(false);
             win->setMouseCursorGrabbed(true);
             win->setFramerateLimit(60);
+            
+            // keeps track of the current room
+            currentRoom = new int;
+            *currentRoom = 0;
 
             // initialises the rooms and cursor
             roomCount = 2;
@@ -39,23 +44,28 @@ class ClickTest: public Game {
 
         // draws all currently active sprites
         void drawFrame () {
-            rooms[checkActive()]->draw(win);
-            cursor->draw(win);
-            
+            rooms[*currentRoom]->draw(win);
+            cursor->draw(win);          
         }
 
-        int checkActive () {
-            for (int i = 0; i < roomCount; i++) {
-                if (rooms[i]->getStatus()) {
-                    std::cout << "active room " << i << std::endl;
-                    return i;
-                } else if (!rooms[i]->getStatus()) {
-                    rooms[i+1]->setActive();
-                    std::cout << "active room " << i+1 << std::endl;
-                    return i+1;
-                }
-            }
-            return 0;
+        void checkActive () {
+            // checks if the menu is active
+            if (rooms[0]->getStatus()) {
+                std::cout << *currentRoom << std::endl;
+
+            // checks if the menu is inactive and the current room is the menu, then sets the next active
+            } else if (*currentRoom == 0 && !rooms[0]->getStatus()) {
+                rooms[1]->setActive();
+                *currentRoom = 1;
+                std::cout << *currentRoom << std::endl;
+
+            // checks if the first room is inactive and the current room is the first, then sets the next active
+            } /*else if (*currentRoom == 1 && !rooms[1]->getStatus()) {
+                rooms[2]->setActive();
+                *currentRoom = 2;
+                std::cout << *currentRoom << std::endl;
+            }*/
+            
         }
 
         // checks for the collision of the cursor with buttons or items
@@ -85,6 +95,7 @@ class ClickTest: public Game {
                 // makes sure everything is being drawn
                 win->clear();
                 cursor->move(win);
+                checkActive();
                 drawFrame();
                 win->display();
             }

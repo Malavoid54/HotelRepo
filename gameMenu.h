@@ -64,21 +64,21 @@ class GameMenu: public Room{
 
         // function that determines what each of the three buttons does
         void buttonPress(Mouse_Cursor* cursor, Event e) {
-            if (button[0].highlightSprite(cursor->getSprite()) && active) {
+            if (button[0].highlightSprite(cursor->getSprite(), 0, 0) && active) {
                 if (e.type == Event::MouseButtonPressed) {
                     // quits the game
                     if (e.mouseButton.button == Mouse::Left) {
                         store->close();
                     }   
                 }
-            } else if (button[1].highlightSprite(cursor->getSprite()) && active) {
+            } else if (button[1].highlightSprite(cursor->getSprite(), 0, 0) && active) {
                 if (e.type == Event::MouseButtonPressed) {
                     // loads a save
                     if (e.mouseButton.button == Mouse::Left) {
                         
                     }   
                 }
-            } else if (button[2].highlightSprite(cursor->getSprite()) && active) {
+            } else if (button[2].highlightSprite(cursor->getSprite(), 0, 0) && active) {
                 if (e.type == Event::MouseButtonPressed) {
                     // sets the menu to be inactive and plays title sequence
                     if (e.mouseButton.button == Mouse::Left) {
