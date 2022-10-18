@@ -31,8 +31,16 @@ class ChessPuzzle: public Room {
             buttons[1].flipButton();
         
             // creates the clickable buttons
-            options = new GameItem(13,13,6);
+            nOptions = 3;
+            options = new GameItem[nOptions];
+            for (int i = 0; i < nOptions; i++) {
+                options[i].createSprite(13,13,6);
+            }
 
+            // positions the 3 options
+            options[0].setPosition(win,555,235);
+            options[1].setPosition(win,375,505);
+            options[2].setPosition(win,290,690);
             
             
         }
@@ -40,10 +48,16 @@ class ChessPuzzle: public Room {
         // draws the room and items
         void draw(RenderWindow* win) {
             if (active) {
+                // draws background
                 win->draw(*background);
+
+                // if the main wall, render the buttons
                 if (mainWall) {
                     buttons[0].draw(win);
-                    options->draw(win);
+                    for (int i = 0; i < nOptions; i++) {
+                        options[i].draw(win);
+                    }
+                // 
                 } else if (!mainWall) {
                     buttons[1].draw(win);
                 }
@@ -68,18 +82,18 @@ class ChessPuzzle: public Room {
                         mainWall = true;
                     }
                 } 
-            } else if (options->highlightSprite(cursor->getSprite(),0,40) && active && mainWall) {
+            } else if (options[0].highlightSprite(cursor->getSprite(),0,40) && active && mainWall) {
                 if (e.type == Event::MouseButtonPressed) {
                     // correct answer
                     if (e.mouseButton.button == Mouse::Left) {
                         active = false;
                     }
                 }
-            } /* else if (options[1].highlightSprite(cursor->getSprite(),13,40) && active && mainWall) {
-                // does nothing
+            } else if (options[1].highlightSprite(cursor->getSprite(),13,40) && active && mainWall) {
+                // does nothing;
             } else if (options[2].highlightSprite(cursor->getSprite(),26,40) && active && mainWall) {
-                // does nothing
-            }*/
+                // does nothing;
+            }
         }
         
         // returns the state of the room

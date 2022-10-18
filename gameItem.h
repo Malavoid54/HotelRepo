@@ -8,7 +8,7 @@ class GameItem: public GameEntity {
         bool pressed;
     public:
         GameItem () {}
-        GameItem (int x, int y, int scale) {
+        void createSprite(int x, int y, int scale) {
             // determines the size of each button
             source.height = x;
             source.width = y;

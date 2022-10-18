@@ -29,7 +29,7 @@ class GameMenu: public Room{
             button[0].setText("Quit Game");
             store = win; // stores a local copy of the window pointer
             active = true; // sets the room to be true
-            loop = true;
+            loop = false;
         }
 
         // draws the background and the buttons
