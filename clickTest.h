@@ -8,6 +8,7 @@
 #include "cursor.h"
 #include "button.h"
 #include "gameMenu.h"
+#include "ChessPuzzle.h"
 
 using namespace sf;
 
@@ -17,7 +18,8 @@ class ClickTest: public Game {
         // pointers to the window, cursor and rooms
         RenderWindow* win;
         Mouse_Cursor* cursor;
-        GameMenu* menu;
+        Room** rooms;
+        int roomCount;
     public:
         // constructor for the game
         ClickTest(int size1, int size2, std::string title) {
@@ -28,20 +30,39 @@ class ClickTest: public Game {
             win->setFramerateLimit(60);
 
             // initialises the rooms and cursor
+            roomCount = 2;
+            rooms = new Room*[roomCount];
+            rooms[0] = new GameMenu(win);
+            rooms[1] = new ChessPuzzle(win);
             cursor = new Mouse_Cursor(win);
-            menu = new GameMenu(win);
         }
 
         // draws all currently active sprites
-        void draw_frame () {
-            menu->draw(win);
+        void drawFrame () {
+            rooms[checkActive()]->draw(win);
             cursor->draw(win);
             
         }
 
+        int checkActive () {
+            for (int i = 0; i < roomCount; i++) {
+                if (rooms[i]->getStatus()) {
+                    std::cout << "active room " << i << std::endl;
+                    return i;
+                } else if (!rooms[i]->getStatus()) {
+                    rooms[i+1]->setActive();
+                    std::cout << "active room " << i+1 << std::endl;
+                    return i+1;
+                }
+            }
+            return 0;
+        }
+
         // checks for the collision of the cursor with buttons or items
         void checkCollision (Mouse_Cursor*, Event e) {
-            menu->buttonPress(cursor, e);
+            for (int i = 0; i < roomCount; i++) {
+                rooms[i]->buttonPress(cursor, e);
+            }
         }
 
         // runs the program
@@ -64,7 +85,7 @@ class ClickTest: public Game {
                 // makes sure everything is being drawn
                 win->clear();
                 cursor->move(win);
-                draw_frame();
+                drawFrame();
                 win->display();
             }
         }
@@ -72,7 +93,9 @@ class ClickTest: public Game {
         // deletes any pointers
         ~ClickTest() {
             delete cursor;
-            delete menu;
+            for (int i = 0; i < 2; i++) {
+                delete rooms[i];
+            } delete [] rooms;
         }
 };
 

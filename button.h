@@ -65,24 +65,22 @@ class Button: public GameEntity {
         }
 
         // sets the position of the text and button
-        void setPosition(RenderWindow* win, int yPos) {
-            body->setPosition((win->getSize().x)/2,(yPos+3)*100);
-            title.setPosition((win->getSize().x)/2,((yPos+3)*100)-10);
+        void setPosition(RenderWindow* win, int x, int y) {
+            x = (win->getSize().x)/2;
+            body->setPosition(x,(y+3)*100);
+            title.setPosition(x,((y+3)*100)-10);
         }
 
         // renders different textures based on if the cursor is hovering over the sprite
         bool highlightSprite(Sprite* sprite) {
             if (sprite->getGlobalBounds().intersects(body->getGlobalBounds())) {
-                source.top = 20;
-                body->setTextureRect(source);
+                setTexture(0,20);
                 return true;
             } else {
-                source.top = 0;
-                body->setTextureRect(source);
+                setTexture(0,0);
                 return false;
             }           
         }
-
         ~Button() {}
 };
 

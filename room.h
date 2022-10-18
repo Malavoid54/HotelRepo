@@ -51,14 +51,20 @@ class Room{
         }
 
         // checks if a room is active or not
-        bool getStatus () {
+        virtual bool getStatus () {
             return active;
         }
 
-        // function for each room to draw to window
-        virtual void draw(RenderWindow* win) {
-            win->draw(*background);
+        // sets as active
+        void setActive () {
+            active = true;
         }
+
+        // function for each room to draw to window
+        virtual void draw(RenderWindow* win) {};
+
+        // handles pressing items and buttons
+        virtual void buttonPress(Mouse_Cursor* cursor, Event e) {};
 
         // destructor
         ~Room () {
