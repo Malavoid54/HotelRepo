@@ -12,7 +12,7 @@
 #include "gameMenu.h"
 #include "ChessPuzzle.h"
 #include "LightsPuzzle.h"
-#include "Cubespuzzle.h"
+#include "CubesPuzzle.h"
 #include "WiresPuzzle.h"
 #include "PyramidPuzzle.h"
 
