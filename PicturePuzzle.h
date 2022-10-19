@@ -1,5 +1,5 @@
-#ifndef WIRESPUZZLE_H
-#define WIRESPUZZLE_H
+#ifndef PICTUREPUZZLE_H
+#define PICTUREPUZZLE_H
 
 #include "room.h"
 #include "roomArrow.h"
@@ -8,7 +8,7 @@
 #include "gameItem.h"
 
 // first room puzzle
-class WiressPuzzle: public Room {
+class PicturePuzzle: public Room {
     private:
         RoomArrow* buttons;
         GameItem* options;
@@ -16,9 +16,9 @@ class WiressPuzzle: public Room {
         int nOptions;
     public:
         // constructor
-        WiresPuzzle(RenderWindow* win) {
+        ChessPuzzle(RenderWindow* win) {
             // initialises room settings
-            setRoom(480,0);
+            setRoom(480,90);
             active = false;
             mainWall = true;
 
@@ -27,18 +27,18 @@ class WiressPuzzle: public Room {
             buttons[0].setPosition(win,1500,0);
             buttons[1].setPosition(win,100,0);
             buttons[1].flipButton();
-            
+        
             // creates the clickable buttons
             nOptions = 3;
             options = new GameItem[nOptions];
             for (int i = 0; i < nOptions; i++) {
-                options[i].createSprite(9,6,6);
+                options[i].createSprite(35,10,6);
             }
 
             // positions the 3 options
-            options[0].setPosition(win,547,296);
-            options[1].setPosition(win,572,351);
-            options[2].setPosition(win,591,353);
+            options[0].setPosition(win,555,235);
+            options[1].setPosition(win,835,505);
+            options[2].setPosition(win,290,510);
         }
 
         // draws the room and items
@@ -46,9 +46,17 @@ class WiressPuzzle: public Room {
             if (active) {
                 // draws background
                 win->draw(*background);
-                for (int i = 0; i < nOptions; i++) {
+
+                // if the main wall, render the buttons
+                if (mainWall) {
+                    buttons[0].draw(win);
+                    for (int i = 0; i < nOptions; i++) {
                         options[i].draw(win);
                     }
+                // renders just the hint wall
+                } else if (!mainWall) {
+                    buttons[1].draw(win);
+                }
             }
         }
         
@@ -58,7 +66,7 @@ class WiressPuzzle: public Room {
                 if (e.type == Event::MouseButtonPressed) {
                     // moves to new screen
                     if (e.mouseButton.button == Mouse::Left) {
-                        setRoom(160,90);
+                        setRoom(480,180);
                         mainWall = false;
                     }   
                 }
@@ -66,23 +74,21 @@ class WiressPuzzle: public Room {
                 if (e.type == Event::MouseButtonPressed) {
                     // moves back to original
                     if (e.mouseButton.button == Mouse::Left) {
-                        setRoom(160,0);
+                        setRoom(480,90);
                         mainWall = true;
                     }
                 } 
-            } else */if (options[0].highlightSprite(cursor->getSprite(),92,41) && active && mainWall) {
-                if (e.type == Event::MouseButtonPressed) {
-                    //does nothing;
-            } else if (options[1].highlightSprite(cursor->getSprite(),92,41) && active && mainWall) {
-                // does nothing;
-            } else if (options[2].highlightSprite(cursor->getSprite(),92,41) && active && mainWall) {
-                // does nothing;
+            } else if (options[0].highlightSprite(cursor->getSprite(),32,126) && active && !mainWall) {
                 if (e.type == Event::MouseButtonPressed) {
                     // correct answer
                     if (e.mouseButton.button == Mouse::Left) {
                         active = false;
                     }
                 }
+            } else if (options[1].highlightSprite(cursor->getSprite(),147,126) && active && !mainWall) {
+                // does nothing;
+            } else if (options[2].highlightSprite(cursor->getSprite(),30,141) && active && !mainWall) {
+                // does nothing;
             }
         }
         
@@ -91,7 +97,7 @@ class WiressPuzzle: public Room {
             return active;
         }
 
-        ~WiresPuzzle() {
+        ~PicturePuzzle() {
             delete [] buttons;
             delete [] options;
         }
