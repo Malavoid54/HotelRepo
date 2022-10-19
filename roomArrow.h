@@ -21,7 +21,7 @@ class RoomArrow: public Button {
         
         // sets the position of the text and button
         void setPosition(RenderWindow* win, int x, int y) {
-            body->setPosition(x,(win->getSize().y)/2);
+            body->setPosition(x,y);
         }
 
         // draws the button

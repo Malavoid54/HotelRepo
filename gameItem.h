@@ -10,8 +10,8 @@ class GameItem: public GameEntity {
         GameItem () {}
         void createSprite(int x, int y, int scale) {
             // determines the size of each button
-            source.height = x;
-            source.width = y;
+            source.height = y;
+            source.width = x;
             
             // creates the sprite and sets the scale
             body = new Sprite();
